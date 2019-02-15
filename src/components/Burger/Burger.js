@@ -22,8 +22,6 @@ const burger = props => {
 
   // transformedIngredients.forEach(ingredient => console.log(ingredient.key));
 
-  console.log(transformedIngredients);
-
   return (
     <div className={classes.Burger}>
       <BurgerIngredient type="bread-top" />
