@@ -1,5 +1,5 @@
 .Burger {
-  width: 50%;
+  width: 60%;
   margin: auto;
   height: 250px;
   overflow: scroll;
@@ -14,13 +14,6 @@
     height: 300px;
   }
 }
-
-/* @media (min-width: 500px) and (min-height: 400pc) {
-  .Burger {
-    width: 450px;
-    height: 300px;
-  }
-} */
 
 @media (min-width: 500px) and (min-height: 401pc) {
   .Burger {

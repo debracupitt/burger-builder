@@ -8,6 +8,7 @@ import classes from "./ContactData.css";
 import axios from "../../../axios-orders";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import * as orderActions from "../../../store/actions/index";
+import { updateObject } from "../../../shared/utility";
 
 class ContactData extends Component {
   state = {
@@ -124,7 +125,8 @@ class ContactData extends Component {
     const order = {
       ingredients: this.props.ings,
       price: this.props.price,
-      orderData: formData
+      orderData: formData,
+      userId: this.props.userId
     };
 
     this.props.onOrderBurger(order, this.props.idToken);
@@ -151,14 +153,19 @@ class ContactData extends Component {
     const updatedOrderForm = {
       ...this.state.orderForm
     };
-    const updatedFormElement = { ...updatedOrderForm[inputIdentifier] };
 
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
+    const updatedOrderForm = updateObject(
+      this.state.orderForm[inputIdentifier],
+      {
+        value: event.target.value,
+        valid: this.checkValidity(
+          updatedFormElement.value,
+          updatedFormElement.validation
+        ),
+        touched: true
+      }
     );
-    updatedFormElement.touched = true;
+
     updatedOrderForm[inputIdentifier] = updatedFormElement;
 
     let formIsValid = true;
@@ -215,7 +222,8 @@ const mapStateToProps = state => {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
-    idToken: state.auth.idToken
+    idToken: state.auth.idToken,
+    userId: state.auth.userId
   };
 };
 
