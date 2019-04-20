@@ -9,6 +9,7 @@ import classes from "./Auth.css";
 import * as actions from "../../store/actions/auth";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import axios from "../../axios-orders";
+import { updateObject, checkValidity } from "../../shared/utility";
 
 class Auth extends Component {
   state = {
@@ -55,36 +56,18 @@ class Auth extends Component {
     }
   }
 
-  checkValidity = (value, rules) => {
-    let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length === rules.maxLength && isValid;
-    }
-
-    return isValid;
-  };
-
   inputChangedHandler = (event, controlName) => {
-    const updatedAuthForm = {
-      ...this.state.authForm,
-      [controlName]: {
-        ...this.state.authForm[controlName],
+    const updatedAuthForm = updateObject(this.state.authForm, {
+      [controlName]: updateObject(this.state.authForm[controlName], {
         value: event.target.value,
-        valid: this.checkValidity(
+        valid: checkValidity(
           event.target.value,
           this.state.authForm[controlName].validation
         ),
         touched: true
-      }
-    };
+      })
+    });
+
     this.setState({ authForm: updatedAuthForm });
   };
 
