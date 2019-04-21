@@ -12,7 +12,7 @@ import * as actions from "../../store/actions/index";
 import axios from "../../axios-orders";
 import classes from "./BurgerBuilder.css";
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     purchasing: false
   };
